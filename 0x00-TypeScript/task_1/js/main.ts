@@ -1,49 +1,52 @@
-
-// Teacher interface
 interface Teacher {
-  firstName: string;
-  lastName: string;
-  fullTimeEmployee: boolean;
-  yearsOfExperience?: number;
-  location: string;
-  [key: string]: any;
+  readonly firstName: string,
+  readonly lastName: string,
+  fullTimeEmployee: boolean,
+  yearsOfExperience?: number,
+  location: string,
+  [propName: string]: any
 }
 
-// Directors interface extending Teacher
-interface Directors extends Teacher {
+interface Directors extends Teacher{
   numberOfReports: number;
 }
 
-// Interface for the printTeacher function
-interface PrintTeacherFunction {
-  (firstName: string, lastName: string): string;
+// printing teachers
+interface printTeacherFunction {
+  (firstName: string, lastName: string) : string;
 }
 
-// Interface for the StudentClass constructor
-interface StudentClassConstructor {
-  new (firstName: string, lastName: string): StudentClass;
+export const printTeacher: printTeacherFunction = (firstName: string, lastName: string): string => {
+  return `${firstName[0]}. ${lastName}`
 }
 
-// Interface for the StudentClass
+interface StudentConstructor {
+  new(firstName: string, lastName: string): StudentClassInterface;
+}
+
+
 interface StudentClassInterface {
+  firstName: string;
+  lastName: string;
   workOnHomework(): string;
   displayName(): string;
 }
 
-// StudentClass implementation
+export const StudentClass: StudentConstructor =
 class StudentClass implements StudentClassInterface {
-  constructor(public firstName: string, public lastName: string) {}
+  firstName: string;
+  lastName: string;
+
+  constructor(firstName: string, lastName: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
 
   workOnHomework(): string {
-    return "Currently working";
+    return 'Currently working';
   }
 
   displayName(): string {
     return this.firstName;
   }
 }
-
-// Function that prints a teacher's name
-const printTeacher: PrintTeacherFunction = (firstName, lastName) => {
-  return `${firstName[0]}. ${lastName}`;
-};
